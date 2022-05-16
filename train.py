@@ -421,8 +421,8 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
 
                 # Save last, best and delete
                 torch.save(ckpt, last)
-                os.system(f'mkdir -p /content/drive/MyDrive/KUMC_v5l/{opt["save-folder"]}/')
-                os.system(f'cp -r /content/yolov5/runs /content/drive/MyDrive/KUMC_v5l/{opt["save-folder"]}/')
+                os.system(f'mkdir -p /content/drive/MyDrive/KUMC_v5l/{opt.save_folder}/')
+                os.system(f'cp -r /content/yolov5/runs /content/drive/MyDrive/KUMC_v5l/{opt.save_folder}/')
                 if best_fitness == fi:
                     torch.save(ckpt, best)
                 if (epoch > 0) and (opt.save_period > 0) and (epoch % opt.save_period == 0):
