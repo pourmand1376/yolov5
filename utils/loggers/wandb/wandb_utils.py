@@ -150,7 +150,7 @@ class WandbLogger():
                 assert wandb, 'install wandb to resume wandb runs'
                 # Resume wandb-artifact:// runs here| workaround for not overwriting wandb.config
                 self.wandb_run = wandb.init(id=run_id,
-                                            project=project,
+                                            project=opt.wandb_name,
                                             entity=entity,
                                             resume='allow',
                                             allow_val_change=True)
@@ -158,7 +158,7 @@ class WandbLogger():
         elif self.wandb:
             self.wandb_run = wandb.init(config=opt,
                                         resume="allow",
-                                        project='YOLOv5' if opt.project == 'runs/train' else Path(opt.project).stem,
+                                        project=opt.wandb_name,
                                         entity=opt.entity,
                                         name=opt.name if opt.name != 'exp' else None,
                                         job_type=job_type,
