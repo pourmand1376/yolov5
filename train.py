@@ -424,7 +424,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                 if opt.save_to_folder and opt.save_from_folder:
                     os.system(f'mkdir -p {opt.save_to_folder}')
                     os.system(f'cp -r {opt.save_from_folder} {opt.save_to_folder}')
-                    
+
                 if best_fitness == fi:
                     torch.save(ckpt, best)
                 if (epoch > 0) and (opt.save_period > 0) and (epoch % opt.save_period == 0):
@@ -518,7 +518,7 @@ def parse_opt(known=False):
     parser.add_argument('--entity', default=None, help='W&B: Entity')
     parser.add_argument('--upload_dataset', nargs='?', const=True, default=False, help='W&B: Upload data, "val" option')
     parser.add_argument('--bbox_interval', type=int, default=-1, help='W&B: Set bounding-box image logging interval')
-    parser.add_argument('--artifact_`alias', type=str, default='latest', help='W&B: Version of dataset artifact to use')
+    parser.add_argument('--artifact_alias', type=str, default='latest', help='W&B: Version of dataset artifact to use')
 
     parser.add_argument('--save-from-folder',type=str,default= '')
     parser.add_argument('--save-to-folder-name',type=str,default= '')
