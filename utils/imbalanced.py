@@ -23,6 +23,8 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         num_samples: int = None,
         callback_get_label: Callable = None,
     ):
+        import ipdb
+        ipdb.set_trace()
         # if indices is not provided, all elements in the dataset will be considered
         self.indices = list(range(len(dataset))) if indices is None else indices
 
@@ -45,6 +47,8 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         self.weights = torch.DoubleTensor(weights.to_list())
 
     def _get_labels(self, dataset):
+        import ipdb
+        ipdb.set_trace()
         if self.callback_get_label:
             return self.callback_get_label(dataset)
         elif isinstance(dataset, torch.utils.data.TensorDataset):
