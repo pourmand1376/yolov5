@@ -136,7 +136,7 @@ def create_dataloader(path,
     weights = [percent if item.shape[0]==0 else 1-percent for item in dataset.labels]
     weights = np.array(weights)
     
-    sampler=WeightedRandomSampler(torch.from_numpy(weights),len(dataset))
+    sampler=WeightedRandomSampler(torch.from_numpy(weights),len(weights))
     loader = DataLoader if image_weights else InfiniteDataLoader  # only DataLoader allows for attribute updates
     return loader(dataset,
                   batch_size=batch_size,
