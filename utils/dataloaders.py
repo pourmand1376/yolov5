@@ -130,11 +130,13 @@ def create_dataloader(path,
     nd = torch.cuda.device_count()  # number of CUDA devices
     nw = min([os.cpu_count() // max(nd, 1), batch_size if batch_size > 1 else 0, workers])  # number of workers
     # sampler = None if rank == -1 else distributed.DistributedSampler(dataset, shuffle=shuffle)
-
-    import ipdb
-    ipdb.set_trace()
-    WeightedRandomSampler()
-    sampler = ImbalancedDatasetSampler(dataset)
+    filtered=len(list(filter(lambda item: item.shape[0]>0, dataset.labels)))
+    percent = filtered / len(dataset.labels)
+    # percent is 0.01 in my case
+    weights = [percent if item.shape[0]==0 else 1-percent for item in dataset.labels]
+    weights = np.array(weights)
+    
+    sampler=WeightedRandomSampler(torch.from_numpy(weights),len(dataset))
     loader = DataLoader if image_weights else InfiniteDataLoader  # only DataLoader allows for attribute updates
     return loader(dataset,
                   batch_size=batch_size,
