@@ -131,7 +131,7 @@ def create_dataloader(path,
     nd = torch.cuda.device_count()  # number of CUDA devices
     nw = min([os.cpu_count() // max(nd, 1), batch_size if batch_size > 1 else 0, workers])  # number of workers
     # sampler = None if rank == -1 else distributed.DistributedSampler(dataset, shuffle=shuffle)
-    sampler = None if rank==-1 else ImbalancedDatasetSampler(dataset)
+    sampler = ImbalancedDatasetSampler(dataset)
     loader = DataLoader if image_weights else InfiniteDataLoader  # only DataLoader allows for attribute updates
     return loader(dataset,
                   batch_size=batch_size,
