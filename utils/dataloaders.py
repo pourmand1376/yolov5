@@ -242,6 +242,7 @@ def create_dataloader(
         DistributedProxySampler(weighted_sampler, num_replicas=2, rank=i)
         for i in range(2)
     ]
+    sampler = dist_samplers
 
     loader = (
         DataLoader if image_weights else InfiniteDataLoader
@@ -252,7 +253,7 @@ def create_dataloader(
             batch_size=batch_size,
             shuffle=shuffle and sampler is None,
             num_workers=nw,
-            sampler=dist_samplers,
+            sampler=sampler,
             pin_memory=True,
             collate_fn=LoadImagesAndLabels.collate_fn4
             if quad
