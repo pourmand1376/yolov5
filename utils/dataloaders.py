@@ -140,16 +140,46 @@ def exif_transpose(image):
     return image
 
 
-class SamplerIterator:
-    def __init__(self, sampler):
+class DistributedProxySampler(DistributedSampler):
+    """Sampler that restricts data loading to a subset of input sampler indices.
+
+    It is especially useful in conjunction with
+    :class:`torch.nn.parallel.DistributedDataParallel`. In such case, each
+    process can pass a DistributedSampler instance as a DataLoader sampler,
+    and load a subset of the original dataset that is exclusive to it.
+
+    .. note::
+        Input sampler is assumed to be of constant size.
+
+    Arguments:
+        sampler: Input data sampler.
+        num_replicas (optional): Number of processes participating in
+            distributed training.
+        rank (optional): Rank of the current process within num_replicas.
+    """
+
+    def __init__(self, sampler, num_replicas=None, rank=None):
+        super(DistributedProxySampler, self).__init__(
+            sampler, num_replicas=num_replicas, rank=rank, shuffle=False
+        )
         self.sampler = sampler
 
     def __iter__(self):
-        for item in self.sampler:
-            yield item
+        # deterministically shuffle based on epoch
+        torch.manual_seed(self.epoch)
+        indices = list(self.sampler)
 
-    def __len__(self):
-        return len(self.sampler)
+        # add extra samples to make it evenly divisible
+        indices += indices[: (self.total_size - len(indices))]
+        if len(indices) != self.total_size:
+            raise RuntimeError("{} vs {}".format(len(indices), self.total_size))
+
+        # subsample
+        indices = indices[self.rank : self.total_size : self.num_replicas]
+        if len(indices) != self.num_samples:
+            raise RuntimeError("{} vs {}".format(len(indices), self.num_samples))
+
+        return iter(indices)
 
 
 def create_dataloader(
@@ -206,7 +236,13 @@ def create_dataloader(
     weights = np.array(weights)
 
     weighted_sampler = WeightedRandomSampler(torch.from_numpy(weights), len(weights))
-    sampler = DistributedSampler(SamplerIterator(weighted_sampler))
+    # sampler = DistributedSampler(SamplerIterator(weighted_sampler))
+
+    dist_samplers = [
+        DistributedProxySampler(weighted_sampler, num_replicas=2, rank=i)
+        for i in range(2)
+    ]
+
     loader = (
         DataLoader if image_weights else InfiniteDataLoader
     )  # only DataLoader allows for attribute updates
@@ -216,7 +252,7 @@ def create_dataloader(
             batch_size=batch_size,
             shuffle=shuffle and sampler is None,
             num_workers=nw,
-            sampler=sampler,
+            sampler=dist_samplers,
             pin_memory=True,
             collate_fn=LoadImagesAndLabels.collate_fn4
             if quad
