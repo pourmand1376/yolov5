@@ -26,7 +26,7 @@ from PIL import ExifTags, Image, ImageOps
 from torch.utils.data import DataLoader, Dataset, dataloader, DistributedSampler
 from tqdm import tqdm
 
-from utils import external_sampler
+import external_sampler
 
 from utils.augmentations import (
     Albumentations,
