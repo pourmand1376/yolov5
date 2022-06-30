@@ -207,7 +207,7 @@ def create_dataloader(
 
     weighted_sampler = WeightedRandomSampler(torch.from_numpy(weights), len(weights))
     sampler = DistributedSampler(
-        SamplerIterator(weighted_sampler, num_replicas=2, rank=rank, shuffle=False)
+        SamplerIterator(weighted_sampler, rank=rank, shuffle=False)
     )
     loader = (
         DataLoader if image_weights else InfiniteDataLoader
