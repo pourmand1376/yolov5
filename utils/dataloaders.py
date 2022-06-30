@@ -206,9 +206,7 @@ def create_dataloader(
     weights = np.array(weights)
 
     weighted_sampler = WeightedRandomSampler(torch.from_numpy(weights), len(weights))
-    sampler = DistributedSampler(
-        SamplerIterator(weighted_sampler, rank=rank, shuffle=False)
-    )
+    sampler = DistributedSampler(SamplerIterator(weighted_sampler, shuffle=False))
     loader = (
         DataLoader if image_weights else InfiniteDataLoader
     )  # only DataLoader allows for attribute updates
