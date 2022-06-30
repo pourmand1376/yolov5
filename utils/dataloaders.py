@@ -23,7 +23,7 @@ import torch
 import torch.nn.functional as F
 import yaml
 from PIL import ExifTags, Image, ImageOps
-from torch.utils.data import DataLoader, Dataset, dataloader, distributed
+from torch.utils.data import DataLoader, Dataset, dataloader, DistributedSampler
 from tqdm import tqdm
 
 from utils.augmentations import (
@@ -53,7 +53,7 @@ from utils.general import (
 )
 from utils.torch_utils import torch_distributed_zero_first
 
-from torch.utils.data.sampler import WeightedRandomSampler, DistributedSampler
+from torch.utils.data.sampler import WeightedRandomSampler
 
 # Parameters
 HELP_URL = "https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data"
