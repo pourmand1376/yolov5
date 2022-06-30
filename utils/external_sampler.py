@@ -9,9 +9,40 @@ import numpy as np
 from torch.utils.data import DistributedSampler
 from torch.utils.data.sampler import Sampler
 
-from catalyst.data.dataset import DatasetFromSampler
 
 LOGGER = logging.getLogger(__name__)
+
+from torch.utils.data import Dataset, Sampler
+
+# https://github.com/catalyst-team/catalyst/blob/master/catalyst/data/dataset.py
+class DatasetFromSampler(Dataset):
+    """Dataset to create indexes from `Sampler`.
+    Args:
+        sampler: PyTorch sampler
+    """
+
+    def __init__(self, sampler: Sampler):
+        """Initialisation for DatasetFromSampler."""
+        self.sampler = sampler
+        self.sampler_list = None
+
+    def __getitem__(self, index: int):
+        """Gets element of the dataset.
+        Args:
+            index: index of the element in the dataset
+        Returns:
+            Single element by index
+        """
+        if self.sampler_list is None:
+            self.sampler_list = list(self.sampler)
+        return self.sampler_list[index]
+
+    def __len__(self) -> int:
+        """
+        Returns:
+            int: length of the dataset
+        """
+        return len(self.sampler)
 
 
 class BalanceClassSampler(Sampler):
@@ -370,7 +401,7 @@ class DynamicBalanceClassSampler(Sampler):
         self.epoch += 1
 
     def _exp_scheduler(self) -> float:
-        return self.exp_lambda ** self.epoch
+        return self.exp_lambda**self.epoch
 
     def __iter__(self) -> Iterator[int]:
         """
