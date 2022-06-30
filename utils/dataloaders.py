@@ -199,8 +199,13 @@ def create_dataloader(
     weighted_sampler = WeightedRandomSampler(torch.from_numpy(weights), len(weights))
     # sampler = DistributedSampler(SamplerIterator(weighted_sampler))
     LOGGER.info(f"rank: {rank}")
-    sampler = external_sampler.DistributedSamplerWrapper(
-        weighted_sampler, num_replicas=2, rank=rank, shuffle=False
+    # rank==-1 in validation of multigpu mode or single gpu mode
+    sampler = (
+        None
+        if rank == -1
+        else external_sampler.DistributedSamplerWrapper(
+            weighted_sampler, num_replicas=2, rank=rank, shuffle=False
+        )
     )
 
     loader = (
