@@ -28,6 +28,7 @@ from tqdm import tqdm
 
 from utils import external_sampler
 
+
 from utils.augmentations import (
     Albumentations,
     augment_hsv,
@@ -197,7 +198,7 @@ def create_dataloader(
 
     weighted_sampler = WeightedRandomSampler(torch.from_numpy(weights), len(weights))
     # sampler = DistributedSampler(SamplerIterator(weighted_sampler))
-    logger.info(f"rank: {rank}")
+    LOGGER.info(f"rank: {rank}")
     sampler = external_sampler.DistributedSamplerWrapper(
         weighted_sampler, num_replicas=2, rank=rank, shuffle=False
     )
