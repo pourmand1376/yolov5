@@ -179,7 +179,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     else:
         lf = lambda x: (1 - x / epochs) * (1.0 - hyp['lrf']) + hyp['lrf']  # linear
     lf = lambda x: 1
-    scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=lf)  # plot_lr_scheduler(optimizer, scheduler, epochs)
+    scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=lf,verbose=True)  # plot_lr_scheduler(optimizer, scheduler, epochs)
 
     # EMA
     ema = ModelEMA(model) if RANK in {-1, 0} else None
