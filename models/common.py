@@ -462,7 +462,7 @@ class DetectMultiBackend(nn.Module):
             y = self.bindings['output'].data
         elif self.coreml:  # CoreML
             im = im.permute(0, 2, 3, 1).cpu().numpy()  # torch BCHW to numpy BHWC shape(1,320,192,3)
-            im = Image.fromarray((im[0] * 255).astype('uint8'))
+            im = Image.fromarray((im[0] * 65535).astype('uint16'))
             # im = im.resize((192, 320), Image.ANTIALIAS)
             y = self.model.predict({'image': im})  # coordinates are xywh normalized
             if 'confidence' in y:
@@ -480,14 +480,14 @@ class DetectMultiBackend(nn.Module):
                 y = self.frozen_func(x=self.tf.constant(im)).numpy()
             else:  # Lite or Edge TPU
                 input, output = self.input_details[0], self.output_details[0]
-                int8 = input['dtype'] == np.uint8  # is TFLite quantized uint8 model
-                if int8:
+                int16 = input['dtype'] == np.uint16  # is TFLite quantized uint8 model
+                if int16:
                     scale, zero_point = input['quantization']
-                    im = (im / scale + zero_point).astype(np.uint8)  # de-scale
+                    im = (im / scale + zero_point).astype(np.uint16)  # de-scale
                 self.interpreter.set_tensor(input['index'], im)
                 self.interpreter.invoke()
                 y = self.interpreter.get_tensor(output['index'])
-                if int8:
+                if int16:
                     scale, zero_point = output['quantization']
                     y = (y.astype(np.float32) - zero_point) * scale  # re-scale
             y[..., :4] *= [w, h, w, h]  # xywh normalized to pixels
@@ -594,7 +594,7 @@ class AutoShape(nn.Module):
         shape1 = [make_divisible(x, self.stride) if self.pt else size for x in np.array(shape1).max(0)]  # inf shape
         x = [letterbox(im, shape1, auto=False)[0] for im in imgs]  # pad
         x = np.ascontiguousarray(np.array(x).transpose((0, 3, 1, 2)))  # stack and BHWC to BCHW
-        x = torch.from_numpy(x).to(p.device).type_as(p) / 255  # uint8 to fp16/32
+        x = torch.from_numpy(x).to(p.device).type_as(p) / 65535  # uint8 to fp16/32
         t.append(time_sync())
 
         with amp.autocast(autocast):
@@ -662,7 +662,7 @@ class Detections:
             else:
                 s += '(no detections)'
 
-            im = Image.fromarray(im.astype(np.uint8)) if isinstance(im, np.ndarray) else im  # from np
+            im = Image.fromarray(im.astype(np.uint16)) if isinstance(im, np.ndarray) else im  # from np
             if pprint:
                 print(s.rstrip(', '))
             if show:

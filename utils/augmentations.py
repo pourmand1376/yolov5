@@ -51,10 +51,10 @@ def augment_hsv(im, hgain=0.5, sgain=0.5, vgain=0.5):
         hue, sat, val = cv2.split(cv2.cvtColor(im, cv2.COLOR_BGR2HSV))
         dtype = im.dtype  # uint8
 
-        x = np.arange(0, 256, dtype=r.dtype)
+        x = np.arange(0, 65535+1, dtype=r.dtype)
         lut_hue = ((x * r[0]) % 180).astype(dtype)
-        lut_sat = np.clip(x * r[1], 0, 255).astype(dtype)
-        lut_val = np.clip(x * r[2], 0, 255).astype(dtype)
+        lut_sat = np.clip(x * r[1], 0, 65535).astype(dtype)
+        lut_val = np.clip(x * r[2], 0, 65535).astype(dtype)
 
         im_hsv = cv2.merge((cv2.LUT(hue, lut_hue), cv2.LUT(sat, lut_sat), cv2.LUT(val, lut_val)))
         cv2.cvtColor(im_hsv, cv2.COLOR_HSV2BGR, dst=im)  # no return needed
@@ -222,7 +222,7 @@ def copy_paste(im, labels, segments, p=0.5):
     n = len(segments)
     if p and n:
         h, w, c = im.shape  # height, width, channels
-        im_new = np.zeros(im.shape, np.uint8)
+        im_new = np.zeros(im.shape, np.uint16)
         for j in random.sample(range(n), k=round(p * n)):
             l, s = labels[j], segments[j]
             box = w - l[3], l[2], w - l[1], l[4]
@@ -271,7 +271,7 @@ def cutout(im, labels, p=0.5):
 def mixup(im, labels, im2, labels2):
     # Applies MixUp augmentation https://arxiv.org/pdf/1710.09412.pdf
     r = np.random.beta(32.0, 32.0)  # mixup ratio, alpha=beta=32.0
-    im = (im * r + im2 * (1 - r)).astype(np.uint8)
+    im = (im * r + im2 * (1 - r)).astype(np.uint16)
     labels = np.concatenate((labels, labels2), 0)
     return im, labels
 

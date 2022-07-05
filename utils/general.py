@@ -957,7 +957,7 @@ def apply_classifier(x, model, img, im0):
 
                 im = im[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
                 im = np.ascontiguousarray(im, dtype=np.float32)  # uint8 to float32
-                im /= 255  # 0 - 255 to 0.0 - 1.0
+                im /= 65535  # 0 - 255 to 0.0 - 1.0
                 ims.append(im)
 
             pred_cls2 = model(torch.Tensor(ims).to(d.device)).argmax(1)  # classifier prediction
@@ -997,7 +997,7 @@ imshow_ = cv2.imshow  # copy to avoid recursion errors
 
 
 def imread(path, flags=cv2.IMREAD_COLOR):
-    return cv2.imdecode(np.fromfile(path, np.uint8), flags)
+    return cv2.imdecode(np.fromfile(path, np.uint16), flags)
 
 
 def imwrite(path, im):

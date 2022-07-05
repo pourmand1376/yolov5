@@ -199,7 +199,7 @@ def export_coreml(model, im, file, int8, half, prefix=colorstr('CoreML:')):
         f = file.with_suffix('.mlmodel')
 
         ts = torch.jit.trace(model, im, strict=False)  # TorchScript model
-        ct_model = ct.convert(ts, inputs=[ct.ImageType('image', shape=im.shape, scale=1 / 255, bias=[0, 0, 0])])
+        ct_model = ct.convert(ts, inputs=[ct.ImageType('image', shape=im.shape, scale=1 / 65535, bias=[0, 0, 0])])
         bits, mode = (8, 'kmeans_lut') if int8 else (16, 'linear') if half else (32, None)
         if bits < 32:
             if platform.system() == 'Darwin':  # quantization only supported on macOS
@@ -367,8 +367,8 @@ def export_tflite(keras_model, im, file, int8, data, nms, agnostic_nms, prefix=c
             converter.representative_dataset = lambda: representative_dataset_gen(dataset, ncalib=100)
             converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
             converter.target_spec.supported_types = []
-            converter.inference_input_type = tf.uint8  # or tf.int8
-            converter.inference_output_type = tf.uint8  # or tf.int8
+            converter.inference_input_type = tf.uint16  # or tf.int8
+            converter.inference_output_type = tf.uint16  # or tf.int8
             converter.experimental_new_quantizer = True
             f = str(file).replace('.pt', '-int8.tflite')
         if nms or agnostic_nms:
