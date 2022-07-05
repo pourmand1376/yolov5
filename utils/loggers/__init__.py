@@ -167,7 +167,7 @@ class Loggers():
 
         if self.tb:
             for f in files:
-                self.tb.add_image(f.stem, cv2.imread(str(f))[..., ::-1], epoch, dataformats='HWC')
+                self.tb.add_image(f.stem, cv2.imread(str(f),-1)[..., ::-1], epoch, dataformats='HWC')
 
         if self.wandb:
             self.wandb.log(dict(zip(self.keys[3:10], results)))
