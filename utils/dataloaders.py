@@ -137,7 +137,10 @@ def create_dataloader(path,
     weights = np.array(weights)
     
     sampler=WeightedRandomSampler(torch.from_numpy(weights),len(weights))
-    loader = DataLoader if image_weights else InfiniteDataLoader  # only DataLoader allows for attribute updates
+    loader = DataLoader if image_weights else InfiniteDataLoader 
+     # only DataLoader allows for attribute updates
+    import ipdb
+    ipdb.set_trace()
     return loader(dataset,
                   batch_size=batch_size,
                   shuffle=shuffle and sampler is None,
@@ -745,7 +748,7 @@ class LoadImagesAndLabels(Dataset):
         return img4, labels4
 
     def load_mosaic9(self, index):
-        # YOLOv5 9-mosaic loader. Loads 1 image + 8 random images into a 9-image mosaic
+        # YOLOv5 9-mosaic loader. Loads 1 image + fc random images into a 9-image mosaic
         labels9, segments9 = [], []
         s = self.img_size
         indices = [index] + random.choices(self.indices, k=8)  # 8 additional image indices
