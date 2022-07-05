@@ -192,13 +192,13 @@ def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max
     if isinstance(targets, torch.Tensor):
         targets = targets.cpu().numpy()
     if np.max(images[0]) <= 1:
-        images *= 255  # de-normalise (optional)
+        images *= 65535  # de-normalise (optional)
     bs, _, h, w = images.shape  # batch size, _, height, width
     bs = min(bs, max_subplots)  # limit plot images
     ns = np.ceil(bs ** 0.5)  # number of subplots (square)
 
     # Build Image
-    mosaic = np.full((int(ns * h), int(ns * w), 3), 255, dtype=np.uint8)  # init
+    mosaic = np.full((int(ns * h), int(ns * w), 3), 65535, dtype=np.uint16)  # init
     for i, im in enumerate(images):
         if i == max_subplots:  # if last batch has fewer images than we expect
             break
@@ -372,7 +372,7 @@ def plot_labels(labels, names=(), save_dir=Path('')):
     # rectangles
     labels[:, 1:3] = 0.5  # center
     labels[:, 1:] = xywh2xyxy(labels[:, 1:]) * 2000
-    img = Image.fromarray(np.ones((2000, 2000, 3), dtype=np.uint8) * 255)
+    img = Image.fromarray(np.ones((2000, 2000, 3), dtype=np.uint16) * 65535)
     for cls, *box in labels[:1000]:
         ImageDraw.Draw(img).rectangle(box, width=1, outline=colors(cls))  # plot
     ax[1].imshow(img)
