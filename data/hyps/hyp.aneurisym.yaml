@@ -27,9 +27,9 @@ degrees: 5.0  # image rotation (+/- deg)
 # a little good
 translate: 0.2  # image translation (+/- fraction)
 scale: 0.5  # image scale (+/- gain)
-shear: 1.0  # image shear (+/- deg)
+shear: 0.0  # image shear (+/- deg)
 # not good
-perspective: 0.0003  # image perspective (+/- fraction), range 0-0.001
+perspective: 0.0000  # image perspective (+/- fraction), range 0-0.001
 # not good
 flipud: 0.5  # image flip up-down (probability)
 fliplr: 0.5  # image flip left-right (probability)
