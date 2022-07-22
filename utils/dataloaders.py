@@ -96,7 +96,6 @@ def create_dataloader(path,
                       imgsz,
                       batch_size,
                       stride,
-                      validation,
                       single_cls=False,
                       hyp=None,
                       augment=False,
@@ -108,7 +107,8 @@ def create_dataloader(path,
                       image_weights=False,
                       quad=False,
                       prefix='',
-                      shuffle=False):
+                      shuffle=False,
+                      validation=False):
     if rect and shuffle:
         LOGGER.warning('WARNING: --rect is incompatible with DataLoader shuffle, setting shuffle=False')
         shuffle = False
