@@ -39,7 +39,11 @@ def ap_per_class(tp, conf, pred_cls, target_cls, plot=False, save_dir='.', names
     # Returns
         The average precision as computed in py-faster-rcnn.
     """
-
+    print(f"TP Shape: {tp.shape}")
+    print(f"Conf Shape : {conf.shape}")
+    print(f"predicted_cls: {pred_cls.shape}")
+    print(f"target_cls: {target_cls.shape}")
+    
     # Sort by objectness
     i = np.argsort(-conf)
     tp, conf, pred_cls = tp[i], conf[i], pred_cls[i]
