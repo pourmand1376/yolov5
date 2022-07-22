@@ -175,7 +175,6 @@ def run(
                                        batch_size,
                                        stride,
                                        single_cls,
-                                       validation=True,
                                        pad=pad,
                                        rect=rect,
                                        workers=workers,
