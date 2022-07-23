@@ -218,7 +218,9 @@ def run(
         lb = [targets[targets[:, 0] == i, 1:] for i in range(nb)] if save_hybrid else []  # for autolabelling
         t3 = time_sync()
 
-        target_cls.append(targets)
+        if targets.shape[0] > 0:
+            target_cls.append(targets)
+
         out = non_max_suppression(out, conf_thres, iou_thres, labels=lb, multi_label=True, agnostic=single_cls)
         dt[2] += time_sync() - t3
 
@@ -267,13 +269,12 @@ def run(
         callbacks.run('on_val_batch_end')
 
     # Compute metrics
-    import ipdb
-    ipdb.set_trace()
+
     stats = [torch.cat(x, 0).cpu().numpy() for x in zip(*stats)]  # to numpy
     target_cls = [torch.cat(x, 0).cpu().numpy() for x in zip(*target_cls)] #to_numpy
     
     if len(stats) and stats[0].any():
-        tp, fp, p, r, f1, ap, ap_class = ap_per_class(*stats,target_cls=target_cls, plot=plots, save_dir=save_dir, names=names)
+        tp, fp, p, r, f1, ap, ap_class = ap_per_class(*stats,target_cls=target_cls[0], plot=plots, save_dir=save_dir, names=names)
         ap50, ap = ap[:, 0], ap.mean(1)  # AP@0.5, AP@0.5:0.95
         mp, mr, map50, map = p.mean(), r.mean(), ap50.mean(), ap.mean()
         nt = np.bincount(stats[3].astype(int), minlength=nc)  # number of targets per class
