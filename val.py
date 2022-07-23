@@ -267,6 +267,8 @@ def run(
         callbacks.run('on_val_batch_end')
 
     # Compute metrics
+    import ipdb
+    ipdb.set_trace()
     stats = [torch.cat(x, 0).cpu().numpy() for x in zip(*stats)]  # to numpy
     target_cls = [torch.cat(x, 0).cpu().numpy() for x in zip(*target_cls)] #to_numpy
     
