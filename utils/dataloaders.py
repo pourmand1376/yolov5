@@ -92,6 +92,13 @@ def exif_transpose(image):
     return image
 
 
+def seed_worker(worker_id):
+    # Set dataloader worker seed https://pytorch.org/docs/stable/notes/randomness.html#dataloader
+    worker_seed = torch.initial_seed() % 2 ** 32
+    np.random.seed(worker_seed)
+    random.seed(worker_seed)
+
+
 def create_dataloader(path,
                       imgsz,
                       batch_size,
@@ -139,13 +146,17 @@ def create_dataloader(path,
     
     sampler = None if validation else WeightedRandomSampler(torch.from_numpy(weights),len(weights))
     loader  = DataLoader if image_weights else InfiniteDataLoader  # only DataLoader allows for attribute updates
+    generator = torch.Generator()
+    generator.manual_seed(0)
     return loader(dataset,
                   batch_size=batch_size,
                   shuffle=shuffle and sampler is None,
                   num_workers=nw,
                   sampler=sampler,
                   pin_memory=True,
-                  collate_fn=LoadImagesAndLabels.collate_fn4 if quad else LoadImagesAndLabels.collate_fn), dataset
+                  collate_fn=LoadImagesAndLabels.collate_fn4 if quad else LoadImagesAndLabels.collate_fn,
+                  worker_init_fn=seed_worker,
+                  generator=generator), dataset
 
 
 class InfiniteDataLoader(dataloader.DataLoader):
@@ -185,15 +196,17 @@ class _RepeatSampler:
 class LoadImages:
     # YOLOv5 image/video dataloader, i.e. `python detect.py --source image.jpg/vid.mp4`
     def __init__(self, path, img_size=640, stride=32, auto=True):
-        p = str(Path(path).resolve())  # os-agnostic absolute path
-        if '*' in p:
-            files = sorted(glob.glob(p, recursive=True))  # glob
-        elif os.path.isdir(p):
-            files = sorted(glob.glob(os.path.join(p, '*.*')))  # dir
-        elif os.path.isfile(p):
-            files = [p]  # files
-        else:
-            raise Exception(f'ERROR: {p} does not exist')
+        files = []
+        for p in sorted(path) if isinstance(path, (list, tuple)) else [path]:
+            p = str(Path(p).resolve())
+            if '*' in p:
+                files.extend(sorted(glob.glob(p, recursive=True)))  # glob
+            elif os.path.isdir(p):
+                files.extend(sorted(glob.glob(os.path.join(p, '*.*'))))  # dir
+            elif os.path.isfile(p):
+                files.append(p)  # files
+            else:
+                raise FileNotFoundError(f'{p} does not exist')
 
         images = [x for x in files if x.split('.')[-1].lower() in IMG_FORMATS]
         videos = [x for x in files if x.split('.')[-1].lower() in VID_FORMATS]
@@ -446,7 +459,7 @@ class LoadImagesAndLabels(Dataset):
                         f += [x.replace('./', parent) if x.startswith('./') else x for x in t]  # local to global path
                         # f += [p.parent / x.lstrip(os.sep) for x in t]  # local to global path (pathlib)
                 else:
-                    raise Exception(f'{prefix}{p} does not exist')
+                    raise FileNotFoundError(f'{prefix}{p} does not exist')
             self.im_files = sorted(x.replace('/', os.sep) for x in f if x.split('.')[-1].lower() in IMG_FORMATS)
             # self.img_files = sorted([x for x in f if x.suffix[1:].lower() in IMG_FORMATS])  # pathlib
             assert self.im_files, f'{prefix}No images found'
@@ -458,10 +471,10 @@ class LoadImagesAndLabels(Dataset):
         cache_path = (p if p.is_file() else Path(self.label_files[0]).parent).with_suffix('.cache')
         try:
             cache, exists = np.load(cache_path, allow_pickle=True).item(), True  # load dict
-            assert cache['version'] == self.cache_version  # same version
-            assert cache['hash'] == get_hash(self.label_files + self.im_files)  # same hash
+            assert cache['version'] == self.cache_version  # matches current version
+            assert cache['hash'] == get_hash(self.label_files + self.im_files)  # identical hash
         except Exception:
-            cache, exists = self.cache_labels(cache_path, prefix), False  # cache
+            cache, exists = self.cache_labels(cache_path, prefix), False  # run cache ops
 
         # Display cache
         nf, nm, ne, nc, n = cache.pop('results')  # found, missing, empty, corrupt, total
