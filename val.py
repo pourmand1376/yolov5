@@ -219,7 +219,9 @@ def run(
         t3 = time_sync()
 
         if targets.shape[0] > 0:
-            target_cls.append(targets)
+            import ipdb
+            ipdb.set_trace()
+            target_cls.append(targets[:,0])
 
         out = non_max_suppression(out, conf_thres, iou_thres, labels=lb, multi_label=True, agnostic=single_cls)
         dt[2] += time_sync() - t3
