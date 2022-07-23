@@ -218,8 +218,11 @@ def run(
         out = non_max_suppression(out, conf_thres, iou_thres, labels=lb, multi_label=True, agnostic=single_cls)
         dt[2] += time_sync() - t3
 
+        import ipdb
+        ipdb.set_trace()
         # Metrics
         for si, pred in enumerate(out):
+            
             labels = targets[targets[:, 0] == si, 1:]
             nl, npr = labels.shape[0], pred.shape[0]  # number of labels, predictions
             path, shape = Path(paths[si]), shapes[si][0]
