@@ -217,18 +217,14 @@ def run(
         targets[:, 2:] *= torch.tensor((width, height, width, height), device=device)  # to pixels
         lb = [targets[targets[:, 0] == i, 1:] for i in range(nb)] if save_hybrid else []  # for autolabelling
         t3 = time_sync()
-
-        if targets.shape[0] > 0:
-            import ipdb
-            ipdb.set_trace()
-            target_cls.append(targets[:,0])
-
         out = non_max_suppression(out, conf_thres, iou_thres, labels=lb, multi_label=True, agnostic=single_cls)
         dt[2] += time_sync() - t3
 
+        if targets.shape[0] > 0:
+            target_cls.append(targets[:, 1])
+
         # Metrics
         for si, pred in enumerate(out):
-            
             labels = targets[targets[:, 0] == si, 1:]
             nl, npr = labels.shape[0], pred.shape[0]  # number of labels, predictions
             path, shape = Path(paths[si]), shapes[si][0]
@@ -254,7 +250,7 @@ def run(
                 correct = process_batch(predn, labelsn, iouv)
                 if plots:
                     confusion_matrix.process_batch(predn, labelsn)
-            stats.append((correct, pred[:, 4], pred[:, 5]))  # (correct, conf, pcls,)
+            stats.append((correct, pred[:, 4], pred[:, 5]))  # (correct, conf, pcls)
 
             # Save/log
             if save_txt:
@@ -271,14 +267,13 @@ def run(
         callbacks.run('on_val_batch_end')
 
     # Compute metrics
-
     stats = [torch.cat(x, 0).cpu().numpy() for x in zip(*stats)]  # to numpy
-    target_cls = [torch.cat(x, 0).cpu().numpy() for x in zip(*target_cls)] #to_numpy
+    target_cls = [torch.stack(x, 0).cpu().numpy() for x in zip(*target_cls)]  # to numpy
     stats.append(target_cls[0])
-    import ipdb
-    ipdb.set_trace()
+
     if len(stats) and stats[0].any():
         tp, fp, p, r, f1, ap, ap_class = ap_per_class(*stats, plot=plots, save_dir=save_dir, names=names)
+
         ap50, ap = ap[:, 0], ap.mean(1)  # AP@0.5, AP@0.5:0.95
         mp, mr, map50, map = p.mean(), r.mean(), ap50.mean(), ap.mean()
         nt = np.bincount(stats[3].astype(int), minlength=nc)  # number of targets per class
