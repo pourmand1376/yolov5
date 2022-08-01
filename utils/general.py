@@ -203,14 +203,14 @@ def init_seeds(seed=0, deterministic=False):
     if deterministic and check_version(torch.__version__, '1.12.0'):  # https://github.com/ultralytics/yolov5/pull/8213
         torch.use_deterministic_algorithms(True)
         os.environ['CUBLAS_WORKSPACE_CONFIG'] = ':4096:8'
-        # os.environ['PYTHONHASHSEED'] = str(seed)
+        os.environ['PYTHONHASHSEED'] = str(seed)
 
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     cudnn.benchmark, cudnn.deterministic = (False, True) if seed == 0 else (True, False)
-    # torch.cuda.manual_seed(seed)
-    # torch.cuda.manual_seed_all(seed)  # for multi GPU, exception safe
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)  # for Multi-GPU, exception safe
 
 
 def intersect_dicts(da, db, exclude=()):
@@ -224,9 +224,15 @@ def get_latest_run(search_dir='.'):
     return max(last_list, key=os.path.getctime) if last_list else ''
 
 
-def is_docker():
-    # Is environment a Docker container?
-    return Path('/workspace').exists()  # or Path('/.dockerenv').exists()
+def is_docker() -> bool:
+    """Check if the process runs inside a docker container."""
+    if Path("/.dockerenv").exists():
+        return True
+    try:  # check if docker is in control groups
+        with open("/proc/self/cgroup") as file:
+            return any("docker" in line for line in file)
+    except OSError:
+        return False
 
 
 def is_colab():
@@ -304,20 +310,27 @@ def git_describe(path=ROOT):  # path must be a directory
 
 @try_except
 @WorkingDirectory(ROOT)
-def check_git_status():
-    # Recommend 'git pull' if code is out of date
-    msg = ', for updates see https://github.com/ultralytics/yolov5'
+def check_git_status(repo='ultralytics/yolov5'):
+    # YOLOv5 status check, recommend 'git pull' if code is out of date
+    url = f'https://github.com/{repo}'
+    msg = f', for updates see {url}'
     s = colorstr('github: ')  # string
     assert Path('.git').exists(), s + 'skipping check (not a git repository)' + msg
-    assert not is_docker(), s + 'skipping check (Docker image)' + msg
     assert check_online(), s + 'skipping check (offline)' + msg
 
-    cmd = 'git fetch && git config --get remote.origin.url'
-    url = check_output(cmd, shell=True, timeout=5).decode().strip().rstrip('.git')  # git fetch
+    splits = re.split(pattern=r'\s', string=check_output('git remote -v', shell=True).decode())
+    matches = [repo in s for s in splits]
+    if any(matches):
+        remote = splits[matches.index(True) - 1]
+    else:
+        remote = 'ultralytics'
+        check_output(f'git remote add {remote} {url}', shell=True)
+    check_output(f'git fetch {remote}', shell=True, timeout=5)  # git fetch
     branch = check_output('git rev-parse --abbrev-ref HEAD', shell=True).decode().strip()  # checked out
-    n = int(check_output(f'git rev-list {branch}..origin/master --count', shell=True))  # commits behind
+    n = int(check_output(f'git rev-list {branch}..{remote}/master --count', shell=True))  # commits behind
     if n > 0:
-        s += f"⚠️ YOLOv5 is out of date by {n} commit{'s' * (n > 1)}. Use `git pull` or `git clone {url}` to update."
+        pull = 'git pull' if remote == 'origin' else f'git pull {remote} master'
+        s += f"⚠️ YOLOv5 is out of date by {n} commit{'s' * (n > 1)}. Use `{pull}` or `git clone {url}` to update."
     else:
         s += f'up to date with {url} ✅'
     LOGGER.info(emojis(s))  # emoji-safe
