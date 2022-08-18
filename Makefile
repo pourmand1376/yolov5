@@ -4,7 +4,7 @@ SHELL = /bin/bash
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 
 install:
-	$(CONDA_ACTIVATE) yolov5
+        $(CONDA_ACTIVATE) yolov5
         pip install -r requirements.txt
 
 train:
