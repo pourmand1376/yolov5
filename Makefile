@@ -15,5 +15,5 @@ train:
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp10/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
-		--epochs 200 --batch-size 40 --device 1 --save-period 5  --name Anevrism \
+		--epochs 200 --batch-size 50 --device 1 --save-period 5  --name Anevrism \
 		--weighted_sampler 
