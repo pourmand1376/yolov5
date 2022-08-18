@@ -13,5 +13,6 @@ train:
 	git pull
 	python train.py --weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp10/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
-		--hyp data/hyps/hyp.aneurisym.yaml
-		--batch-size 40 --device 1 --save-period 5  --name Anevrism
+		--hyp data/hyps/hyp.aneurisym.yaml \
+		--batch-size 40 --device 1 --save-period 5  --name Anevrism \
+		--weighted_sampler
