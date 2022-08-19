@@ -28,9 +28,9 @@ train_yolov5m_midlabel: ## train yolov5 medium model with 3dim database
 	git checkout sampler_aneurysm
 	git pull
 	python train.py \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp27/weights/best.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
-		--epochs 200 --batch-size 50 --device 0 --save-period 5  \
+		--epochs 200 --batch-size 60 --device 0 --save-period 5  \
 		--weighted_sampler 
 	
