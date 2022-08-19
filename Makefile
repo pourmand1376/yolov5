@@ -1,13 +1,18 @@
+## different options to train yolov5 model
+
 .ONESHELL:
 
 SHELL = /bin/bash
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 
-install:
+help:     ## Show this help.
+	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
+
+install: # install yolov5 dependencies
 	$(CONDA_ACTIVATE) yolov5
 	pip install -r requirements.txt
 
-train_yolov5l_basic:
+train_yolov5l_basic: ## train yolov5 large model with default database
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
@@ -18,8 +23,8 @@ train_yolov5l_basic:
 		--epochs 200 --batch-size 50 --device 1 --save-period 5  \
 		--weighted_sampler 
 
-train_yolov5m_midlabel:
-$(CONDA_ACTIVATE) yolov5
+train_yolov5m_midlabel: ## train yolov5 medium model with 3dim database
+	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
 	python train.py \
