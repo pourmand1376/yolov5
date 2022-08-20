@@ -5,14 +5,14 @@
 SHELL = /bin/bash
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 
-help:     ## Show this help.
+help:  ## Show this help.
 	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
 
-install: # install yolov5 dependencies
+install: ## install yolov5 dependencies
 	$(CONDA_ACTIVATE) yolov5
 	pip install -r requirements.txt
 
-tensorboard: # run tensorboard
+tensorboard: ## run tensorboard
 	$(CONDA_ACTIVATE) yolov5
 	tensorboard --logdir runs/train --port 6006
 
