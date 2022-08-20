@@ -32,7 +32,7 @@ train_yolov5m: ## yolov5m without 3dim data
 	git checkout sampler_aneurysm
 	git pull
 	python train.py \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/best.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp50/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
 		--epochs 200 --batch-size 60 --device 0 --save-period 5  \
@@ -44,7 +44,7 @@ train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 	git checkout sampler_aneurysm
 	git pull
 	python train.py \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/best.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
 		--epochs 200 --batch-size 60 --device 0 --save-period 5  \
