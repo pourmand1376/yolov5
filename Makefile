@@ -27,7 +27,7 @@ train_yolov5l_basic: ## train yolov5 large model with default database
 		--epochs 200 --batch-size 50 --device 1 --save-period 5  \
 		--weighted_sampler 
 
-train_yolov5m:
+train_yolov5m: ## yolov5m without 3dim data
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
