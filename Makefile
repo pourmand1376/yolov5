@@ -12,6 +12,10 @@ install: # install yolov5 dependencies
 	$(CONDA_ACTIVATE) yolov5
 	pip install -r requirements.txt
 
+tensorboard:
+	$(CONDA_ACTIVATE) yolov5
+	tensorboard --logdir runs/train --port 6006
+
 train_yolov5l_basic: ## train yolov5 large model with default database
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
