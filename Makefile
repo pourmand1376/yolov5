@@ -36,7 +36,7 @@ train_yolov5m: ## yolov5m without 3dim data
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
 		--epochs 200 --batch-size 60 --device 0 --save-period 5  \
-		--weighted_sampler --resume
+		--weighted_sampler 
 		
 
 train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
