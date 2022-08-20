@@ -27,7 +27,19 @@ train_yolov5l_basic: ## train yolov5 large model with default database
 		--epochs 200 --batch-size 50 --device 1 --save-period 5  \
 		--weighted_sampler 
 
-train_yolov5m_midlabel: ## train yolov5 medium model with 3dim database
+train_yolov5m:
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python train.py \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/best.pt \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
+		--hyp data/hyps/hyp.aneurisym.yaml \
+		--epochs 200 --batch-size 60 --device 0 --save-period 5  \
+		--weighted_sampler --resume
+		
+
+train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
@@ -37,4 +49,7 @@ train_yolov5m_midlabel: ## train yolov5 medium model with 3dim database
 		--hyp data/hyps/hyp.aneurisym.yaml \
 		--epochs 200 --batch-size 60 --device 0 --save-period 5  \
 		--weighted_sampler --resume
-	
+
+val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
+	$(CONDA_ACTIVATE) yolov5
+
