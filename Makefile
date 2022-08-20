@@ -12,7 +12,7 @@ install: # install yolov5 dependencies
 	$(CONDA_ACTIVATE) yolov5
 	pip install -r requirements.txt
 
-tensorboard:
+tensorboard: # run tensorboard
 	$(CONDA_ACTIVATE) yolov5
 	tensorboard --logdir runs/train --port 6006
 
