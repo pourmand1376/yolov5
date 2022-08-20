@@ -69,8 +69,8 @@ val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 	git pull
 	python val.py \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
-		--weight /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/best.pt \
+		--weight /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/last.pt \
 		--batch-size 40 --device $(device) --img-size 512 \
 		--task $(task) \
 		--save-txt \
-		--workers 8
+		--workers $(workers)
