@@ -725,8 +725,10 @@ class LoadImagesAndLabels(Dataset):
 
         def _get_patient(img_index):
             return str.join('_', self.im_files[img_index].split('_')[:-1])
-            
+
         breakpoint()
+        mult_img=np.zeros(shape=(7,512,512))
+        
 
     def load_image(self, i):
         # Loads 1 image from dataset index 'i', returns (im, original hw, resized hw)
