@@ -62,7 +62,7 @@ train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 	git pull
 	python train.py \
 		--img-size 512 \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp54/weights/last.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp55/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel.yaml \
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
@@ -77,7 +77,7 @@ val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 	git pull
 	python val.py \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
-		--weight /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp55/weights/last.pt \
+		--weight /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/last.pt \
 		--batch-size 40 --device $(device) --img-size 512 \
 		--task $(task) \
 		--save-txt \
