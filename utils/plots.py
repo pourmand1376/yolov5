@@ -201,7 +201,7 @@ def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max
     # Build Image
     mosaic = np.full((int(ns * h), int(ns * w), 3), 255, dtype=np.uint8)  # init
     for i, im in enumerate(images):
-        im = im[2:5, ...]
+        im = im[2:4, ...]
         if i == max_subplots:  # if last batch has fewer images than we expect
             break
         x, y = int(w * (i // ns)), int(h * (i % ns))  # block origin
