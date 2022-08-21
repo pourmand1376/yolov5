@@ -745,7 +745,7 @@ class LoadImagesAndLabels(Dataset):
         _set_image(mult_img, index, image, index+2, 5)
         _set_image(mult_img, index, image, index+3, 6)
 
-        return mult_img, label, file_name,shape
+        return torch.from_numpy(mult_img), label, file_name,shape
 
     def load_image(self, i):
         # Loads 1 image from dataset index 'i', returns (im, original hw, resized hw)
