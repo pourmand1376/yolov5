@@ -9,6 +9,9 @@
 SHELL = /bin/bash
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 
+workers = 1
+device = 0
+
 help:
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m %s\n", $$1, $$2}'
 
@@ -26,8 +29,6 @@ tensorboard: ## run tensorboard
 	$(CONDA_ACTIVATE) yolov5
 	tensorboard --logdir runs/train --port 6006
 
-workers = 8
-device = 0
 
 train_yolov5l_basic: ## train yolov5 large model with default database
 	$(CONDA_ACTIVATE) yolov5
