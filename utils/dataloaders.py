@@ -137,7 +137,7 @@ def create_weighted_sampler(dataset):
 
     final_weights = np.array(final_weights)
     return WeightedRandomSampler(torch.from_numpy(final_weights),
-        num_samples= 30) # this one indicates your iteration size. 
+        num_samples=  int(len(final_weights)/8))  # this one indicates your iteration size. 
 
 
 def create_dataloader(path,
