@@ -646,8 +646,7 @@ class LoadImagesAndLabels(Dataset):
     #     #self.shuffled_vector = np.random.permutation(self.nF) if self.augment else np.arange(self.nF)
     #     return self
 
-    def __getitem__(self, index):
-        breakpoint()
+    def __getitem_child__(self, index):
         index = self.indices[index]  # linear, shuffled, or image_weights
 
         hyp = self.hyp
@@ -720,6 +719,13 @@ class LoadImagesAndLabels(Dataset):
         img = np.ascontiguousarray(img)
 
         return torch.from_numpy(img), labels_out, self.im_files[index], shapes
+
+    def __get_item__(self,index):
+        image,label,file_name,shape= __getitem_child__(index)
+        def get_patient(img_index):
+            return str.join('_', self.im_files[img_index].split('_')[:-1])
+
+        breakpoint()
 
     def load_image(self, i):
         # Loads 1 image from dataset index 'i', returns (im, original hw, resized hw)
