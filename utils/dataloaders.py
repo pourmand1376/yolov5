@@ -721,11 +721,12 @@ class LoadImagesAndLabels(Dataset):
         return torch.from_numpy(img), labels_out, self.im_files[index], shapes
 
     def __getitem__(self,index):
-        image,label,file_name,shape= getitem_normal(index)
-        def get_patient(img_index):
-            return str.join('_', self.im_files[img_index].split('_')[:-1])
-
         breakpoint()
+        image,label,file_name,shape= getitem_normal(index)
+
+        def _get_patient(img_index):
+            return str.join('_', self.im_files[img_index].split('_')[:-1])
+        
 
     def load_image(self, i):
         # Loads 1 image from dataset index 'i', returns (im, original hw, resized hw)
