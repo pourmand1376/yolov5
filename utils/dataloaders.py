@@ -647,6 +647,7 @@ class LoadImagesAndLabels(Dataset):
     #     return self
 
     def __getitem__(self, index):
+        breakpoint()
         index = self.indices[index]  # linear, shuffled, or image_weights
 
         hyp = self.hyp
