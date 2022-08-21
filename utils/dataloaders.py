@@ -720,7 +720,7 @@ class LoadImagesAndLabels(Dataset):
 
         return torch.from_numpy(img), labels_out, self.im_files[index], shapes
 
-    def __get_item__(self,index):
+    def __getitem__(self,index):
         image,label,file_name,shape= __getitem_child__(index)
         def get_patient(img_index):
             return str.join('_', self.im_files[img_index].split('_')[:-1])
