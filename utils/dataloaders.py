@@ -726,7 +726,9 @@ class LoadImagesAndLabels(Dataset):
         image = image[:,:512,:512]
 
         def _get_patient(img_index):
-            return str.join('_', self.im_files[img_index].split('_')[:-1])
+            if img_index < len(self.im_files):
+                return str.join('_', self.im_files[img_index].split('_')[:-1])
+            return False
 
         def _set_image(mult_img_array,main_index,main_image, alt_index, array_position):
             if _get_patient(main_index) == _get_patient(alt_index):
