@@ -68,7 +68,7 @@ train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
-train_yolov5m_midlabel_multidim: ## train yolov5 mid model with 3dim database
+train_yolov5m_midlabel_multidim: ## train yolov5 mid model with spatio-temporal images
 	$(CONDA_ACTIVATE) yolov5
 	git checkout test_dataloader
 	git pull
