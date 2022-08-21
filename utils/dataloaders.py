@@ -731,12 +731,12 @@ class LoadImagesAndLabels(Dataset):
             if _get_patient(main_index) == _get_patient(alt_index):
                 image_,label_,_,_= self.getitem_normal(alt_index)
                 # ignore label
-                mult_img_array[array_position,...] = image_[0,...]
+                mult_img_array[array_position,...] = image_[0,:512]
             else:
-                mult_img_array[array_position,...] = main_image[0,...]
+                mult_img_array[array_position,...] = main_image[0,:512]
 
         mult_img=np.zeros(shape=(7,512,512))
-        mult_img[3,...] = image[0,...]
+        mult_img[3,...] = image[0,:512,:512]
         
         _set_image(mult_img,index,image,index-3, 0)
         _set_image(mult_img, index, image, index-2, 1)
