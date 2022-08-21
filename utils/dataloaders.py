@@ -729,6 +729,8 @@ class LoadImagesAndLabels(Dataset):
         breakpoint()
         mult_img=np.zeros(shape=(7,512,512))
         
+        a=1
+        b=2
 
     def load_image(self, i):
         # Loads 1 image from dataset index 'i', returns (im, original hw, resized hw)
