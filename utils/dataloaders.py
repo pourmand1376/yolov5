@@ -647,6 +647,7 @@ class LoadImagesAndLabels(Dataset):
     #     return self
 
     def __getitem__(self, index):
+        import pdb;pdb.set_trace()
         index = self.indices[index]  # linear, shuffled, or image_weights
 
         hyp = self.hyp
