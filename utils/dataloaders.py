@@ -744,7 +744,6 @@ class LoadImagesAndLabels(Dataset):
         _set_image(mult_img, index, image, index+1,4)
         _set_image(mult_img, index, image, index+2, 5)
         _set_image(mult_img, index, image, index+3, 6)
-        breakpoint()
 
         return mult_img, label, file_name,shape
 
