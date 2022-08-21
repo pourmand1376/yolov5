@@ -10,6 +10,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 
 workers = 1
 device = 0
+batch = 60
 
 .PHONY: help
 help:
@@ -40,7 +41,7 @@ train_yolov5l_basic: ## train yolov5 large model with default database
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp10/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
-		--epochs 200 --batch-size 50 --device $(device) --save-period 5 --workers $(workers) \
+		--epochs 200 --batch-size $(batch) --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
 train_yolov5m: ## yolov5m without 3dim data
@@ -52,7 +53,7 @@ train_yolov5m: ## yolov5m without 3dim data
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp50/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_normal.yaml \
-		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
+		--epochs 200 --batch-size $(batch) --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 		
 
@@ -65,7 +66,7 @@ train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp54/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel.yaml \
-		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
+		--epochs 200 --batch-size $(batch) --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
 train_yolov5m_midlabel_multidim: ## train yolov5 mid model with spatio-temporal images
@@ -77,7 +78,7 @@ train_yolov5m_midlabel_multidim: ## train yolov5 mid model with spatio-temporal 
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp54/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel.yaml \
-		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
+		--epochs 200 --batch-size $(batch) --device $(device) --save-period 5 --workers $(workers) \
 		--cfg models/yolov5m.yaml \
 		--weighted_sampler 
 
@@ -91,7 +92,7 @@ val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 	python val.py \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--weight /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp49/weights/last.pt \
-		--batch-size 40 --device $(device) --img-size 512 \
+		--batch-size $(batch) --device $(device) --img-size 512 \
 		--task $(task) \
 		--save-txt \
 		--workers $(workers)
