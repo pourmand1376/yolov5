@@ -726,11 +726,27 @@ class LoadImagesAndLabels(Dataset):
         def _get_patient(img_index):
             return str.join('_', self.im_files[img_index].split('_')[:-1])
 
-        breakpoint()
+        def _set_image(mult_img_array,main_index,main_image, alt_index, array_position):
+            if _get_patient(main_index) == _get_patient(alt_index):
+                image_,label_,_,_= self.getitem_normal(alt_index)
+                # ignore label
+                mult_img_array[array_position,...] = image_[0,...]
+            else:
+                mult_img_array[array_position,...] = main_image[0,...]
+
         mult_img=np.zeros(shape=(7,512,512))
+        mult_img[3,...] = image[0,...]
         
-        a=1
-        b=2
+        _set_image(mult_img,index,image,index-3, 0)
+        _set_image(mult_img, index, image, index-2, 1)
+        _set_image(mult_img, index, image, index-1, 2)
+        
+        _set_image(mult_img, index, image, index+1,4)
+        _set_image(mult_img, index, image, index+2, 5)
+        _set_image(mult_img, index, image, index+3, 6)
+        breakpoint()
+
+        return mult_img, label, file_name,shape
 
     def load_image(self, i):
         # Loads 1 image from dataset index 'i', returns (im, original hw, resized hw)
