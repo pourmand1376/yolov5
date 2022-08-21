@@ -78,7 +78,7 @@ train_yolov5m_midlabel_multidim: ## train yolov5 mid model with spatio-temporal 
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel.yaml \
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
-		--cfg models/yolov5m.yaml
+		--cfg models/yolov5m.yaml \
 		--weighted_sampler 
 
 task = val
