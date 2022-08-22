@@ -721,32 +721,32 @@ class LoadImagesAndLabels(Dataset):
 
         return torch.from_numpy(img), labels_out, self.im_files[index], shapes
 
+    def _get_patient(self, img_index):
+            return str.join('_', self.im_files[img_index].split('_')[:-1])
+
+    def _set_image(self, mult_img_array,main_index,main_image, alt_index, array_position):
+        if  alt_index < len(self.im_files) and self._get_patient(main_index) == self._get_patient(alt_index):
+            image_,label_,_,_= self.getitem_normal(alt_index)
+            image_ = image_[:,:512,:512]
+            # ignore label
+            mult_img_array[array_position,...] = image_[0,...]
+        else:
+            mult_img_array[array_position,...] = main_image[0,...]
+
     def __getitem__(self,index):
         image,label,file_name,shape= self.getitem_normal(index)
         image = image[:,:512,:512]
 
-        def _get_patient(img_index):
-            return str.join('_', self.im_files[img_index].split('_')[:-1])
-
-        def _set_image(mult_img_array,main_index,main_image, alt_index, array_position):
-            if  alt_index < len(self.im_files) and _get_patient(main_index) == _get_patient(alt_index):
-                image_,label_,_,_= self.getitem_normal(alt_index)
-                image_ = image_[:,:512,:512]
-                # ignore label
-                mult_img_array[array_position,...] = image_[0,...]
-            else:
-                mult_img_array[array_position,...] = main_image[0,...]
-
         mult_img=np.zeros(shape=(7,512,512))
         mult_img[3,...] = image[0,...]
         
-        _set_image(mult_img,index,image,index-3, 0)
-        _set_image(mult_img, index, image, index-2, 1)
-        _set_image(mult_img, index, image, index-1, 2)
+        self._set_image(mult_img,index,image,index-3, 0)
+        self._set_image(mult_img, index, image, index-2, 1)
+        self._set_image(mult_img, index, image, index-1, 2)
         
-        _set_image(mult_img, index, image, index+1,4)
-        _set_image(mult_img, index, image, index+2, 5)
-        _set_image(mult_img, index, image, index+3, 6)
+        self._set_image(mult_img, index, image, index+1,4)
+        self._set_image(mult_img, index, image, index+2, 5)
+        self._set_image(mult_img, index, image, index+3, 6)
 
         return torch.from_numpy(mult_img), label, file_name,shape
 

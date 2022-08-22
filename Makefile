@@ -13,14 +13,9 @@ device = 0
 batch = 60
 
 .PHONY: help
-help:
+help: 
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m %s\n", $$1, $$2}'
 
-update: ## pull git updates
-	git pull
-
-.PHONY:git
-git: update ## pull git updates
 
 .PHONY: install
 install: ## install yolov5 dependencies
