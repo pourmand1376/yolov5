@@ -172,7 +172,6 @@ class ComputeLoss:
         lcls *= self.hyp['cls']
 
         # loss values should roughly be in the same order of magnitude!
-        breakpoint()
         div = lbox / lobj 
         lobj = lobj * 5 * div
 
