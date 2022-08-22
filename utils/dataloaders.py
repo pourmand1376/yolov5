@@ -726,12 +726,10 @@ class LoadImagesAndLabels(Dataset):
         image = image[:,:512,:512]
 
         def _get_patient(img_index):
-            if img_index < len(self.im_files):
-                return str.join('_', self.im_files[img_index].split('_')[:-1])
-            return False
+            return str.join('_', self.im_files[img_index].split('_')[:-1])
 
         def _set_image(mult_img_array,main_index,main_image, alt_index, array_position):
-            if _get_patient(main_index) == _get_patient(alt_index):
+            if  alt_index < len(self.im_files) and _get_patient(main_index) == _get_patient(alt_index):
                 image_,label_,_,_= self.getitem_normal(alt_index)
                 image_ = image_[:,:512,:512]
                 # ignore label
