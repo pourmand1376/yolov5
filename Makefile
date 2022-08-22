@@ -85,7 +85,7 @@ train_yolov5s_midlabel_multidim: ## train yolov5 mid model with spatio-temporal 
 		--img-size 512 \
 		--weights yolov5s.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
-		--hyp data/hyps/hyp.yolov5m_midlabel.yaml \
+		--hyp data/hyps/hyp.aneurisym.yaml \
 		--epochs 200 --batch-size $(batch) --device $(device) --save-period 5 --workers $(workers) \
 		--cfg models/yolov5s.yaml \
 		--weighted_sampler 
