@@ -41,6 +41,7 @@ def _create(name, pretrained=True, channels=3, classes=80, autoshape=True, verbo
     name = Path(name)
     path = name.with_suffix('.pt') if name.suffix == '' and not name.is_dir() else name  # checkpoint path
     try:
+        breakpoint()
         device = select_device(device)
         if pretrained and channels == 3 and classes == 80:
             try:
