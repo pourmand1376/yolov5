@@ -617,9 +617,9 @@ class AutoShape(nn.Module):
                 elif isinstance(im, Image.Image):  # PIL Image
                     im, f = np.asarray(exif_transpose(im)), getattr(im, 'filename', f) or f
                 files.append(Path(f).with_suffix('.jpg').name)
-                if im.shape[0] < 5:  # image in CHW
-                    im = im.transpose((1, 2, 0))  # reverse dataloader .transpose(2, 0, 1)
-                im = im[..., :3] if im.ndim == 3 else cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)  # enforce 3ch input
+                #if im.shape[0] < 5:  # image in CHW
+                #    im = im.transpose((1, 2, 0))  # reverse dataloader .transpose(2, 0, 1)
+                #im = im[..., :3] if im.ndim == 3 else cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)  # enforce 3ch input
                 s = im.shape[:2]  # HWC
                 shape0.append(s)  # image shape
                 g = (size / max(s))  # gain
