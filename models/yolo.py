@@ -110,7 +110,7 @@ class BaseModel(nn.Module):
 
     def _profile_one_layer(self, m, x, dt):
         c = m == self.model[-1]  # is final layer, copy input as inplace fix
-        o = thop.profile(m, inputs=(x.copy() if c else x,), verbose=False)[0] / 1E9 * 2 if thop else 0  # FLOPs
+        o = thop.profile(m, inputs=(x.copy() if c else x,), verbose=True)[0] / 1E9 * 2 if thop else 0  # FLOPs
         t = time_sync()
         for _ in range(10):
             m(x.copy() if c else x)
@@ -131,7 +131,7 @@ class BaseModel(nn.Module):
         self.info()
         return self
 
-    def info(self, verbose=False, img_size=640):  # print model information
+    def info(self, verbose=True, img_size=640):  # print model information
         model_info(self, verbose, img_size)
 
     def _apply(self, fn):

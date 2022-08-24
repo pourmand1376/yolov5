@@ -345,7 +345,7 @@ def check_python(minimum='3.7.0'):
     check_version(platform.python_version(), minimum, name='Python ', hard=True)
 
 
-def check_version(current='0.0.0', minimum='0.0.0', name='version ', pinned=False, hard=False, verbose=False):
+def check_version(current='0.0.0', minimum='0.0.0', name='version ', pinned=False, hard=False, verbose=True):
     # Check version vs. required version
     current, minimum = (pkg.parse_version(x) for x in (current, minimum))
     result = (current == minimum) if pinned else (current >= minimum)  # bool
@@ -541,7 +541,7 @@ def check_amp(model):
 
     def amp_allclose(model, im):
         # All close FP32 vs AMP results
-        m = AutoShape(model, verbose=False)  # model
+        m = AutoShape(model, verbose=True)  # model
         a = m(im).xywhn[0]  # FP32 inference
         m.amp = True
         b = m(im).xywhn[0]  # AMP inference

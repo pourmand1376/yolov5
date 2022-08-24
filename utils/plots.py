@@ -386,7 +386,7 @@ def plot_labels(labels, names=(), save_dir=Path('')):
     plt.close()
 
 
-def imshow_cls(im, labels=None, pred=None, names=None, nmax=25, verbose=False, f=Path('images.jpg')):
+def imshow_cls(im, labels=None, pred=None, names=None, nmax=25, verbose=True, f=Path('images.jpg')):
     # Show classification image grid with labels (optional) and predictions (optional)
     from utils.augmentations import denormalize
 

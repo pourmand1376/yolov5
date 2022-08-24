@@ -122,7 +122,7 @@ def export_onnx(model, im, file, opset, train, dynamic, simplify, prefix=colorst
             model.cpu() if dynamic else model,  # --dynamic only compatible with cpu
             im.cpu() if dynamic else im,
             f,
-            verbose=False,
+            verbose=True,
             opset_version=opset,
             training=torch.onnx.TrainingMode.TRAINING if train else torch.onnx.TrainingMode.EVAL,
             do_constant_folding=not train,
@@ -216,7 +216,7 @@ def export_coreml(model, im, file, int8, half, prefix=colorstr('CoreML:')):
         return None, None
 
 
-def export_engine(model, im, file, train, half, dynamic, simplify, workspace=4, verbose=False):
+def export_engine(model, im, file, train, half, dynamic, simplify, workspace=4, verbose=True):
     # YOLOv5 TensorRT export https://developer.nvidia.com/tensorrt
     prefix = colorstr('TensorRT:')
     try:
@@ -471,7 +471,7 @@ def run(
         dynamic=False,  # ONNX/TF/TensorRT: dynamic axes
         simplify=False,  # ONNX: simplify model
         opset=12,  # ONNX: opset version
-        verbose=False,  # TensorRT: verbose log
+        verbose=True,  # TensorRT: verbose log
         workspace=4,  # TensorRT: workspace size (GB)
         nms=False,  # TF: add NMS to model
         agnostic_nms=False,  # TF: add agnostic NMS to model

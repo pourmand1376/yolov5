@@ -35,7 +35,7 @@ def run(
     imgsz=224,  # inference size (pixels)
     device='',  # cuda device, i.e. 0 or 0,1,2,3 or cpu
     workers=8,  # max dataloader workers (per RANK in DDP mode)
-    verbose=False,  # verbose output
+    verbose=True,  # verbose output
     project=ROOT / 'runs/val-cls',  # save to project/name
     name='exp',  # save to project/name
     exist_ok=False,  # existing project/name ok, do not increment

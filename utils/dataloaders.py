@@ -1130,7 +1130,7 @@ class HUBDatasetStats():
                 im = cv2.resize(im, (int(im_width * r), int(im_height * r)), interpolation=cv2.INTER_AREA)
             cv2.imwrite(str(f_new), im)
 
-    def get_json(self, save=False, verbose=False):
+    def get_json(self, save=False, verbose=True):
         # Return dataset JSON for Ultralytics HUB
         def _round(labels):
             # Update labels to integer class and 6 decimal place floats

@@ -50,7 +50,7 @@ def check_anchors(dataset, model, thr=4.0, imgsz=640):
         LOGGER.info(f'{s}Anchors are a poor fit to dataset ⚠️, attempting to improve...')
         na = m.anchors.numel() // 2  # number of anchors
         try:
-            anchors = kmean_anchors(dataset, n=na, img_size=imgsz, thr=thr, gen=1000, verbose=False)
+            anchors = kmean_anchors(dataset, n=na, img_size=imgsz, thr=thr, gen=1000, verbose=True)
         except Exception as e:
             LOGGER.info(f'{PREFIX}ERROR: {e}')
         new_bpr = metric(anchors)[0]
@@ -138,7 +138,7 @@ def kmean_anchors(dataset='./data/coco128.yaml', n=9, img_size=640, thr=4.0, gen
         LOGGER.warning(f'{PREFIX}WARNING: switching strategies from kmeans to random init')
         k = np.sort(npr.rand(n * 2)).reshape(n, 2) * img_size  # random init
     wh, wh0 = (torch.tensor(x, dtype=torch.float32) for x in (wh, wh0))
-    k = print_results(k, verbose=False)
+    k = print_results(k, verbose=True)
 
     # Plot
     # k, d = [None] * 20, [None] * 20
