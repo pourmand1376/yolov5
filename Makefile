@@ -91,6 +91,7 @@ train_yolov5s_midlabel_multidim: ## train yolov5 mid model with spatio-temporal 
 		--weighted_sampler 
 
 
+
 task = val
 val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 	## for this one pass task=train or task=val or task=test 
