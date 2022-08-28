@@ -61,11 +61,11 @@ train_yolov5m_midlabel_mosaic: ## train yolov5 mid model with mosaic database
 	git pull
 	python train.py \
 		--img-size 1024 \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp55/weights/last.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp169/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_mosaic/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel_mosaic.yaml \
 		--epochs 200 --batch-size 30 --device $(device) --save-period 5 --workers $(workers) \
-		--weighted_sampler 
+		--weighted_sampler --resume
 
 train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 	$(CONDA_ACTIVATE) yolov5
