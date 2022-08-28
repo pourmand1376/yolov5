@@ -55,6 +55,17 @@ train_yolov5m: ## yolov5m without 3dim data
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 		
+train_yolov5m_midlabel_mosaic: ## train yolov5 mid model with 3dim database
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python train.py \
+		--img-size 512 \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp55/weights/last.pt \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_mosaic/database.yaml \
+		--hyp data/hyps/hyp.yolov5m_midlabel_mosaic.yaml \
+		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
+		--weighted_sampler 
 
 train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 	$(CONDA_ACTIVATE) yolov5
