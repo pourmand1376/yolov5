@@ -55,7 +55,7 @@ train_yolov5m: ## yolov5m without 3dim data
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 		
-train_yolov5m_midlabel_mosaic: ## train yolov5 mid model with mosaic database
+train_yolov5m_mosaic: ## train yolov5 mid model with mosaic database
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
