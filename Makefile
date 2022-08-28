@@ -60,7 +60,7 @@ train_yolov5m_midlabel_mosaic: ## train yolov5 mid model with mosaic database
 	git checkout sampler_aneurysm
 	git pull
 	python train.py \
-		--img-size 1000 \
+		--img-size 1024 \
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp55/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_mosaic/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel_mosaic.yaml \
