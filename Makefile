@@ -67,6 +67,19 @@ train_yolov5m_mosaic: ## train yolov5 mid model with mosaic database
 		--epochs 200 --batch-size 30 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler --resume
 
+train_yolov5m_mosaic_transformer: ## train yolov5 mid model with mosaic database
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python train.py \
+		--img-size 1024 \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp169/weights/last.pt \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_mosaic/database.yaml \
+		--hyp data/hyps/hyp.yolov5m_midlabel_mosaic.yaml \
+		--cfg models/hub/yolov5s-transformer.yaml \
+		--epochs 200 --batch-size 30 --device $(device) --save-period 5 --workers $(workers) \
+		--weighted_sampler 
+
 train_yolov5m_mosaic_3d_midlabel: ## train yolov5 mid model with mosaic database
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
