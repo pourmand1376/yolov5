@@ -77,7 +77,7 @@ train_yolov5m_mosaic_transformer: ## train yolov5 mid model with mosaic database
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_mosaic/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel_mosaic.yaml \
 		--cfg models/yolov5m_transformer.yaml \
-		--epochs 200 --batch-size 30 --device $(device) --save-period 5 --workers $(workers) \
+		--epochs 200 --batch-size $(batch_size) --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
 train_yolov5m_mosaic_3d_midlabel: ## train yolov5 mid model with mosaic database
