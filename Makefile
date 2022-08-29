@@ -10,6 +10,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 
 workers = 1
 device = 0
+batch = 30
 
 .PHONY: help
 help:
