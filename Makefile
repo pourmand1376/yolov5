@@ -93,8 +93,8 @@ train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
-task = val
-batch = 40
+task=val
+batch=40
 val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 	## for this one pass task=train or task=val or task=test 
 	## default is val
