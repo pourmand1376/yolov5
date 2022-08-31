@@ -99,7 +99,7 @@ train_yolov5s_midlabel:
 	git pull
 	python train.py \
 		--img-size 512 \
-		--weights yolov5s.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp187/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.yolov5s_midlabel.yaml \
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
