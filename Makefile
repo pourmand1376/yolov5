@@ -93,6 +93,18 @@ train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
+train_yolov5s_midlabel:
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python train.py \
+		--img-size 512 \
+		--weights yolov5s.pt \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
+		--hyp data/hyps/hyp.yolov5s_midlabel.yaml \
+		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
+		--weighted_sampler 
+
 task=val
 batch=40
 version=last
