@@ -110,7 +110,7 @@ val_yolov5s_midlabel:
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
-	python train.py \
+	python val.py \
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp189/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--batch-size $(batch) --device $(device) --img-size 512 \
