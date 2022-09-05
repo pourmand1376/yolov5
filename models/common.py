@@ -49,6 +49,26 @@ class Conv(nn.Module):
     def forward_fuse(self, x):
         return self.act(self.conv(x))
 
+class Conv3d(nn.Module):
+    # Standard convolution
+    def __init__(self, c1, c2, k=1, s=1, p=None, g=1, act=True):  # ch_in, ch_out, kernel, stride, padding, groups
+        super().__init__()
+        #self.conv = nn.Conv3d(1, c2, k, s, autopad(k, p), groups=g, bias=False)
+        #self.bn = nn.BatchNorm2d(c2)
+        self.act = nn.SiLU() if act is True else (act if isinstance(act, nn.Module) else nn.Identity())
+
+        self.conv = nn.Conv3d(1,48, kernel_size=(3,3,3), stride=1, padding=1,bias=False) # 32 for yolov5s, 48 for yolov5m
+        self.bn = nn.BatchNorm3d(48)
+
+
+    def forward(self, x):
+        output_bn = self.bn(self.conv(x[:,None,...]))
+        output_bn =output_bn.view(output_bn.shape[0],-1, *output_bn.shape[3:])
+        return self.act(output_bn)
+
+    def forward_fuse(self, x):
+        return self.act(self.conv(x))
+    
 
 class DWConv(Conv):
     # Depth-wise convolution class

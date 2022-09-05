@@ -105,6 +105,18 @@ train_yolov5s_midlabel:
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
+train_yolov5m_midlabel_3dconv:
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python train.py \
+		--img-size 512 \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp210/weights/last.pt \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
+		--hyp data/hyps/hyp.aneurisym.yaml \
+		--epochs 200 --batch-size 20 --device $(device) --save-period 5 --workers $(workers) \
+		--weighted_sampler --cfg models/yolov5m_conv3d.yaml 
+
 version=last
 val_yolov5s_midlabel:
 	$(CONDA_ACTIVATE) yolov5
