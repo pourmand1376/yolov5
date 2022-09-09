@@ -23,3 +23,13 @@ train_yolov5s: ## train simple yolov5s
 	git pull
 	python train.py --weights yolov5s.pt --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
 		--batch-size $(batch) --device $(device) --save-period 5  --name kumc_yolov5s_
+batch=20
+task=val
+device=0
+val_yolov5s:
+	$(CONDA_ACTIVATE) yolov5
+	git checkout polyp_kumc
+	git pull
+	python val.py --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
+		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_2/weights/last.pt \
+		--batch-size $(batch) --task $(task) --device $(device)
