@@ -9,6 +9,9 @@ device=0
 help: update
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m %s\n", $$1, $$2}'
 
+update:
+	git pull
+
 install: ## install yolov5 dependencies
 	$(CONDA_ACTIVATE) yolov5
 	pip install -r requirements.txt
