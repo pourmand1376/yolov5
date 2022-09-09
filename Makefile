@@ -26,7 +26,7 @@ train_yolov5s: ## train simple yolov5s
 batch=20
 task=val
 device=0
-val_yolov5s:
+val_yolov5s: ## val yolov5s 
 	$(CONDA_ACTIVATE) yolov5
 	git checkout polyp_kumc
 	git pull
