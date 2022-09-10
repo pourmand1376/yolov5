@@ -22,7 +22,7 @@ train_yolov5s: ## train simple yolov5s
 	git checkout polyp_kumc
 	git pull
 	python train.py --weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_2/weights/last.pt --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
-		--hyp data/hyps/hyp.scratch-med.yaml \
+		--hyp data/hyps/hyp.scratch-high.yaml \
 		--batch-size $(batch) --device $(device) --name kumc_yolov5s_
 batch=20
 task=val
