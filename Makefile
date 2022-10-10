@@ -51,7 +51,7 @@ train_yolov5m_basic: ## yolov5m with only sampler
 	git pull
 	python train.py \
 		--img-size 512 \
-		--weights yolov5m.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp50/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_sampler.yaml \
 		--epochs 200 --batch-size $(batch) --device $(device) --workers $(workers) \
