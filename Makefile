@@ -68,7 +68,8 @@ val_yolov5m_basic: # vali with only sampler
 		--batch-size $(batch) --device $(device) --img-size 512 \
 		--task $(task) \
 		--save-txt \
-		--workers $(workers)
+		--workers $(workers) \
+		--conf-thres 0.4
 
 train_yolov5m: ## yolov5m without 3dim data
 	$(CONDA_ACTIVATE) yolov5
