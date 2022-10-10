@@ -44,6 +44,19 @@ train_yolov5l_basic: ## train yolov5 large model with default database
 		--epochs 200 --batch-size 50 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
+batch=40
+train_yolov5m_basic: ## yolov5m with only sampler
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python train.py \
+		--img-size 512 \
+		--weights yolov5m.pt \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
+		--hyp data/hyps/hyp.yolov5m_sampler.yaml \
+		--epochs 200 --batch-size $(batch) --device $(device) --workers $(workers) \
+		--weighted_sampler 
+
 train_yolov5m: ## yolov5m without 3dim data
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
