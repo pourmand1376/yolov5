@@ -69,7 +69,7 @@ val_yolov5m_basic: # vali with only sampler
 		--task $(task) \
 		--save-txt \
 		--workers $(workers) \
-		--conf-thres 0.4
+		--conf-thres 0.3 --iou-thres 0.6
 
 train_yolov5m: ## yolov5m without 3dim data
 	$(CONDA_ACTIVATE) yolov5
