@@ -11,6 +11,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 workers = 1
 device = 0
 batch = 30
+task=val
 
 .PHONY: help
 help: update
@@ -56,6 +57,18 @@ train_yolov5m_basic: ## yolov5m with only sampler
 		--hyp data/hyps/hyp.yolov5m_sampler.yaml \
 		--epochs 200 --batch-size $(batch) --device $(device) --workers $(workers) \
 		--weighted_sampler 
+
+val_yolov5m_basic: # vali with only sampler
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python val.py \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp215/weights/last.pt \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
+		--batch-size $(batch) --device $(device) --img-size 512 \
+		--task $(task) \
+		--save-txt \
+		--workers $(workers)
 
 train_yolov5m: ## yolov5m without 3dim data
 	$(CONDA_ACTIVATE) yolov5
