@@ -46,6 +46,7 @@ train_yolov5l_basic: ## train yolov5 large model with default database
 		--weighted_sampler 
 
 batch=40
+version=best
 train_yolov5m_basic: ## yolov5m with only sampler
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
@@ -58,18 +59,19 @@ train_yolov5m_basic: ## yolov5m with only sampler
 		--epochs 200 --batch-size $(batch) --device $(device) --workers $(workers) \
 		--weighted_sampler 
 
+conf=0.3
 val_yolov5m_basic: # vali with only sampler
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
 	python val.py \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp215/weights/last.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp215/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--batch-size $(batch) --device $(device) --img-size 512 \
 		--task $(task) \
 		--save-txt \
 		--workers $(workers) \
-		--conf-thres 0.3 --iou-thres 0.6
+		--conf-thres $(conf) --iou-thres 0.6
 
 train_yolov5m: ## yolov5m without 3dim data
 	$(CONDA_ACTIVATE) yolov5
