@@ -79,7 +79,7 @@ train_yolov5m: ## yolov5m without 3dim data
 	git pull
 	python train.py \
 		--img-size 512 \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp215/weights/best.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp50/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_normal.yaml \
 		--epochs 200 --batch-size $(batch) --device $(device) --workers $(workers) \
