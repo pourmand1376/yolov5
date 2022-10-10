@@ -82,7 +82,7 @@ train_yolov5m: ## yolov5m without 3dim data
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp215/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_normal.yaml \
-		--epochs 200 --batch-size 120 --device $(device) --workers $(workers) \
+		--epochs 200 --batch-size $(batch) --device $(device) --workers $(workers) \
 		--weighted_sampler 
 		
 train_yolov5m_mosaic: ## train yolov5 mid model with mosaic database
