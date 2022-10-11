@@ -147,3 +147,15 @@ val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 		--save-txt \
 		--workers $(workers)
 
+val_yolov5m_3d_mid:
+	$(CONDA_ACTIVATE) yolov5
+	git checkout sampler_aneurysm
+	git pull
+	python val.py \
+		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
+		--weight /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp212/weights/$(version).pt \
+		--batch-size $(batch) --device $(device) --img-size 512 \
+		--task $(task) \
+		--save-txt \
+		--workers $(workers) \
+		--conf-thres $(conf) --iou-thres 0.6
