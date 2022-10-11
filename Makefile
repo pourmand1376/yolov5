@@ -111,7 +111,7 @@ train_yolov5m_midlabel_3dconv:
 	git pull
 	python train.py \
 		--img-size 512 \
-		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp210/weights/last.pt \
+		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp212/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
 		--epochs 200 --batch-size 20 --device $(device) --save-period 5 --workers $(workers) \
