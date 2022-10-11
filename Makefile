@@ -162,5 +162,6 @@ val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 		--batch-size $(batch) --device $(device) --img-size 512 \
 		--task $(task) \
 		--save-txt \
-		--workers $(workers)
+		--workers $(workers) \
+		--conf-thres $(conf) --iou-thres 0.6
 
