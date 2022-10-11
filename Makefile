@@ -114,7 +114,7 @@ train_yolov5m_midlabel_3dconv: ## 3d conv RGB yolov5m
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp212/weights/best.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.aneurisym.yaml \
-		--epochs 200 --batch-size 20 --device $(device) --save-period 5 --workers $(workers) \
+		--epochs 200 --batch-size $(batch) --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler --cfg models/yolov5m_conv3d.yaml 
 
 version=last
