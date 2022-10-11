@@ -105,7 +105,7 @@ train_yolov5s_midlabel:
 		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
-train_yolov5m_midlabel_3dconv:
+train_yolov5m_midlabel_3dconv: # 3d conv RGB yolov5m
 	$(CONDA_ACTIVATE) yolov5
 	git checkout 3d_aneurysm
 	git pull
@@ -118,7 +118,7 @@ train_yolov5m_midlabel_3dconv:
 		--weighted_sampler --cfg models/yolov5m_conv3d.yaml 
 
 version=last
-val_yolov5s_midlabel:
+val_yolov5s_midlabel: #validate yolov5s_midlabel
 	$(CONDA_ACTIVATE) yolov5
 	git checkout sampler_aneurysm
 	git pull
