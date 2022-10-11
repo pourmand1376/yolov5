@@ -107,7 +107,7 @@ train_yolov5s_midlabel:
 
 train_yolov5m_midlabel_3dconv:
 	$(CONDA_ACTIVATE) yolov5
-	git checkout sampler_aneurysm
+	git checkout 3d_aneurysm
 	git pull
 	python train.py \
 		--img-size 512 \
@@ -149,7 +149,7 @@ val_yolov5m_midlabel: ## validation of yolov5 midlabel with 3dim database
 
 val_yolov5m_3d_mid:
 	$(CONDA_ACTIVATE) yolov5
-	git checkout sampler_aneurysm
+	git checkout 3d_aneurysm
 	git pull
 	python val.py \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
