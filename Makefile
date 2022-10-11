@@ -119,7 +119,7 @@ train_yolov5m_midlabel: ## train yolov5 mid model with 3dim database
 		--weights /mnt/new_ssd/projects/Anevrism/Models/pourmand/yolov5/runs/train/exp55/weights/last.pt \
 		--data /mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_3dim/database.yaml \
 		--hyp data/hyps/hyp.yolov5m_midlabel.yaml \
-		--epochs 200 --batch-size 60 --device $(device) --save-period 5 --workers $(workers) \
+		--epochs 200 --batch-size $(batch) --device $(device) --save-period 5 --workers $(workers) \
 		--weighted_sampler 
 
 train_yolov5s_midlabel:
