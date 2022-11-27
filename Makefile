@@ -17,20 +17,22 @@ install: ## install yolov5 dependencies
 	pip install -r requirements.txt
 
 batch=40
+exp=2
 train_yolov5s: ## train simple yolov5s
 	$(CONDA_ACTIVATE) yolov5
 	git checkout polyp_kumc
 	git pull
-	python train.py --weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_2/weights/last.pt --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
+	python train.py --weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_{exp}/weights/last.pt --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
 		--hyp data/hyps/hyp.scratch-high.yaml \
 		--batch-size $(batch) --device $(device) --name kumc_yolov5s_
 batch=20
 task=val
 device=0
+exp=2
 val_yolov5s: ## val yolov5s 
 	$(CONDA_ACTIVATE) yolov5
 	git checkout polyp_kumc
 	git pull
 	python val.py --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
-		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_2/weights/last.pt \
+		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_{exp}/weights/last.pt \
 		--batch-size $(batch) --task $(task) --device $(device)
