@@ -42,4 +42,5 @@ detect: ## detect images in the folder to get the label
 	git pull
 	python detect.py \
 		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
-		--source /mnt/new_ssd/projects/Polyp/Data/semi-kvasir
+		--source /mnt/new_ssd/projects/Polyp/Data/semi-kvasir \
+		--save-txt --half
