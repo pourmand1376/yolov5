@@ -36,3 +36,10 @@ val_yolov5s: ## val yolov5s
 	python val.py --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
 		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
 		--batch-size $(batch) --task $(task) --device $(device)
+
+detect: ## detect images in the folder to get the label
+	$(CONDA_ACTIVATE) yolov5
+	git pull
+	python detect.py \
+		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
+		--source /mnt/new_ssd/projects/Polyp/Data/semi-kvasir
