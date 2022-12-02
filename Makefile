@@ -25,6 +25,15 @@ train_yolov5s: ## train simple yolov5s
 	python train.py --weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt --data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset.yaml \
 		--hyp data/hyps/hyp.scratch-high.yaml \
 		--batch-size $(batch) --device $(device) --name kumc_yolov5s_
+
+train_semi: ## semi supervised training
+	$(CONDA_ACTIVATE) yolov5
+	git checkout polyp_kumc
+	git pull
+	python train.py --weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
+		--data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/dataset_semi.yaml \
+		--hyp data/hyps/hyp.scratch-high.yaml \
+		--batch-size $(batch) --device $(device) --name kumc_yolov5s_
 batch=20
 task=val
 device=0
