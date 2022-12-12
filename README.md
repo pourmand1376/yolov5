@@ -2,6 +2,11 @@
 
 This repository contains the source code for aneurysm project. 
 
+## Image Postprocessing
+All code for image postprocessing is available here. Also we implemented making an RGB dataset here. 
+
+[Link](https://github.com/pourmand1376/dataset_preprocess/tree/main/DICOM_Aneurysm)
+
 There are actually two branches which we have created for this project. 
 
 ## Aneurysm Sampler
