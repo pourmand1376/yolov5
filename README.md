@@ -12,6 +12,8 @@ There are actually two branches which we have created for this project. To start
 ## Aneurysm Sampler
 This is where I have added sampler and normalized loss function and rgb ideas. 
 
+I've also made sampler publicly available for anyone to use via a [pull request](https://github.com/ultralytics/yolov5/pull/8766) on original yolov5 repo. 
+
 [Link](https://github.com/pourmand1376/yolov5/tree/sampler_aneurysm)
 
 ## 3D Aneurysm
