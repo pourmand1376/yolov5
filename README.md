@@ -7,7 +7,7 @@ All code for image postprocessing is available here. Also we implemented making 
 
 [Link](https://github.com/pourmand1376/dataset_preprocess/tree/main/DICOM_Aneurysm)
 
-There are actually two branches which we have created for this project. 
+There are actually two branches which we have created for this project. To start to see what I've done. I take your attention to my makefile. I have tried to make my code as clear as possible for others to replicate easily. 
 
 ## Aneurysm Sampler
 This is where I have added sampler and normalized loss function and rgb ideas. 
