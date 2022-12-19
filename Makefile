@@ -54,5 +54,5 @@ detect: ## detect images in the folder to get the label
 	python detect.py \
 		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
 		--source /mnt/new_ssd/projects/Polyp/Data/semi-kvasir \
-		--conf-thres ${conf} --iou-thresh ${iou}
+		--conf-thres ${conf} --iou-thresh ${iou} \
 		--save-txt --half
