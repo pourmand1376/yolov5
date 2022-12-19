@@ -46,10 +46,13 @@ val_yolov5s: ## val yolov5s
 		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
 		--batch-size $(batch) --task $(task) --device $(device)
 
+conf=0.7
+iou=0.45
 detect: ## detect images in the folder to get the label
 	$(CONDA_ACTIVATE) yolov5
 	git pull
 	python detect.py \
 		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
 		--source /mnt/new_ssd/projects/Polyp/Data/semi-kvasir \
+		--conf-thres ${conf} --iou-thresh ${iou}
 		--save-txt --half
