@@ -16,6 +16,9 @@ install: ## install yolov5 dependencies
 	$(CONDA_ACTIVATE) yolov5
 	pip install -r requirements.txt
 
+jupyter: ## run jupyter
+	jupyter notebook --port 8080
+
 batch=40
 exp=2
 train_yolov5s: ## train simple yolov5s
