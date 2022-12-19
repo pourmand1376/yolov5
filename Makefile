@@ -58,4 +58,4 @@ detect: ## detect images in the folder to get the label
 		--weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
 		--source /mnt/new_ssd/projects/Polyp/Data/semi-kvasir/images/ \
 		--conf-thres ${conf} --iou-thres ${iou} \
-		--save-txt --half
+		--save-txt --half --no-save
