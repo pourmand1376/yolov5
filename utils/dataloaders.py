@@ -887,7 +887,7 @@ class LoadImagesAndLabels(Dataset):
         im, label, path, shapes = zip(*batch)  # transposed
         for i, lb in enumerate(label):
             lb[:, 0] = i  # add target image index for build_targets()
-        return torch.cat(im, dim=0), torch.cat(label, 0), path, shapes
+        return torch.stack(im, 0), torch.cat(label, 0), path, shapes
 
     @staticmethod
     def collate_fn4(batch):

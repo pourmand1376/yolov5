@@ -54,8 +54,8 @@ class Albumentations:
                 A.RandomRotate90(always_apply=False, p=0.2),
                 A.MedianBlur(always_apply=False, p=0.2, blur_limit=(3, 7)),
                 A.GaussianBlur(always_apply=False, p=0.2, blur_limit=(3, 7), sigma_limit=(0.0, 0)),
-                #A.PadIfNeeded(always_apply=True, p=1.0, min_height=640, min_width=640, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
-                #A.RandomCrop(always_apply=False, p=1.0, height=640, width=640),
+                A.PadIfNeeded(always_apply=True, p=1.0, min_height=size, min_width=size, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
+                A.RandomCrop(always_apply=False, p=1.0, height=size, width=size),
             ]
 
             self.transform = A.Compose(T, bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
