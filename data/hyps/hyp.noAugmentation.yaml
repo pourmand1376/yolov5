@@ -31,5 +31,5 @@ perspective: 0.0  # image perspective (+/- fraction), range 0-0.001
 flipud: 0.0  # image flip up-down (probability)
 fliplr: 0.0  # image flip left-right (probability)
 mosaic: 0.4  # image mosaic (probability)
-mixup: 0.4  # image mixup (probability)
-copy_paste: 0.4  # segment copy-paste (probability)
+mixup: 0.0  # image mixup (probability)
+copy_paste: 0.0  # segment copy-paste (probability)

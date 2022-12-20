@@ -37,7 +37,7 @@ class Albumentations:
                 # A.RandomBrightnessContrast(p=0.0),
                 # A.RandomGamma(p=0.0),
                 # A.ImageCompression(quality_lower=75, p=0.0)]  # transforms
-                A.PadIfNeeded(always_apply=True, p=1.0, min_height=400, min_width=400, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
+                #A.PadIfNeeded(always_apply=True, p=1.0, min_height=400, min_width=400, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
                 A.HorizontalFlip(always_apply=False, p=0.5),
                 A.VerticalFlip(always_apply=False, p=0.5),
                 A.ChannelShuffle(always_apply=False, p=0.2),
@@ -47,15 +47,15 @@ class Albumentations:
                 A.Perspective(always_apply=False, p=0.2, scale=(0.05, 0.1), keep_size=0, pad_mode=0, pad_val=(0, 0, 0), mask_pad_val=0, fit_output=0, interpolation=0),
                 A.RandomBrightness(always_apply=False, p=0.2, limit=(-0.34, 0.41)),
                 A.RandomContrast(always_apply=False, p=0.2, limit=(-0.44, 0.61)),
-                A.RandomCrop(always_apply=False, p=0.1, height=400, width=400),
-                A.CenterCrop(always_apply=False, p=0.05, height=300, width=300),
+                #A.RandomCrop(always_apply=False, p=0.1, height=400, width=400),
+                #A.CenterCrop(always_apply=False, p=0.05, height=300, width=300),
                 A.ToGray(always_apply=False, p=0.2),
                 A.SafeRotate(always_apply=False, p=0.2, limit=(-360, 360), interpolation=0, border_mode=0, value=(0, 0, 0), mask_value=None),
                 A.RandomRotate90(always_apply=False, p=0.2),
                 A.MedianBlur(always_apply=False, p=0.2, blur_limit=(3, 7)),
                 A.GaussianBlur(always_apply=False, p=0.2, blur_limit=(3, 7), sigma_limit=(0.0, 0)),
-                A.PadIfNeeded(always_apply=True, p=1.0, min_height=640, min_width=640, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
-                A.RandomCrop(always_apply=False, p=1.0, height=640, width=640),
+                #A.PadIfNeeded(always_apply=True, p=1.0, min_height=640, min_width=640, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
+                #A.RandomCrop(always_apply=False, p=1.0, height=640, width=640),
             ]
 
             self.transform = A.Compose(T, bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
