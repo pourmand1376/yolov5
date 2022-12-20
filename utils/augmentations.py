@@ -38,7 +38,7 @@ class Albumentations:
                 # A.RandomGamma(p=0.0),
                 # A.ImageCompression(quality_lower=75, p=0.0)]  # transforms
 
-                A.HorzontalFlip(always_apply=False, p=0.5),
+                A.HorizontalFlip(always_apply=False, p=0.5),
                 A.VerticalFlip(always_apply=False, p=0.5),
                 A.ChannelShuffle(always_apply=False, p=0.2),
                 A.Blur(always_apply=False, p=0.4, blur_limit=(3, 8)),
