@@ -46,7 +46,7 @@ class Albumentations:
                 A.ColorJitter(always_apply=False, p=0.4, brightness=(0.8, 1.2), contrast=(0.8, 1.2), saturation=(0.8, 1.2), hue=(-0.2, 0.2)),
                 A.Perspective(always_apply=False, p=0.4, scale=(0.05, 0.1), keep_size=0, pad_mode=0, pad_val=(0, 0, 0), mask_pad_val=0, fit_output=0, interpolation=0),
                 A.RandomBrightness(always_apply=False, p=0.4, limit=(-0.34, 0.41)),
-                A.RandomBrightnessContrast(always_apply=False, p=1.0, brightness_limit=(-0.31, 0.49), contrast_limit=(-0.32, 0.38), brightness_by_max=True)
+                A.RandomBrightnessContrast(always_apply=False, p=0.4, brightness_limit=(-0.31, 0.49), contrast_limit=(-0.32, 0.38), brightness_by_max=True)
                 #A.RandomCrop(always_apply=False, p=0.1, height=400, width=400),
                 #A.CenterCrop(always_apply=False, p=0.05, height=300, width=300),
                 A.ToGray(always_apply=False, p=0.4),
