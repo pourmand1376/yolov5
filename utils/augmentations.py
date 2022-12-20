@@ -37,7 +37,7 @@ class Albumentations:
                 # A.RandomBrightnessContrast(p=0.0),
                 # A.RandomGamma(p=0.0),
                 # A.ImageCompression(quality_lower=75, p=0.0)]  # transforms
-
+                A.PadIfNeeded(always_apply=True, p=1.0, min_height=400, min_width=400, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
                 A.HorizontalFlip(always_apply=False, p=0.5),
                 A.VerticalFlip(always_apply=False, p=0.5),
                 A.ChannelShuffle(always_apply=False, p=0.2),
@@ -54,7 +54,7 @@ class Albumentations:
                 A.RandomRotate90(always_apply=False, p=0.2),
                 A.MedianBlur(always_apply=False, p=0.2, blur_limit=(3, 7)),
                 A.GaussianBlur(always_apply=False, p=0.2, blur_limit=(3, 7), sigma_limit=(0.0, 0)),
-                A.PadIfNeeded(always_apply=False, p=1.0, min_height=640, min_width=640, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
+                A.PadIfNeeded(always_apply=True, p=1.0, min_height=640, min_width=640, pad_height_divisor=None, pad_width_divisor=None, border_mode=0, value=(0, 0, 0), mask_value=None),
                 A.RandomCrop(always_apply=False, p=1.0, height=640, width=640),
             ]
 
