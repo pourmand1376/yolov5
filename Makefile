@@ -16,6 +16,10 @@ install: ## install yolov5 dependencies
 	$(CONDA_ACTIVATE) yolov5
 	pip install -r requirements.txt
 
+install_augmentation: ## install albumentations
+	$(CONDA_ACTIVATE) yolov5
+	pip install albumentations>=1.0.3
+
 jupyter: ## run jupyter
 	jupyter notebook --port 8080
 
@@ -30,6 +34,8 @@ train_yolov5s: ## train simple yolov5s
 		--batch-size $(batch) --device $(device) --name kumc_yolov5s_
 
 dataset=dataset_semi
+hyp=hyp.scratch-high
+# hyp = hyp.noAugmentation
 # dataset=dataset_semi_both
 # dataset=dataset
 train_semi: ## semi supervised training
@@ -38,7 +44,7 @@ train_semi: ## semi supervised training
 	git pull
 	python train.py --weights /mnt/new_ssd/projects/Polyp/yolov5/runs/train/kumc_yolov5s_$(exp)/weights/last.pt \
 		--data /mnt/new_ssd/projects/Polyp/kumc_project/KUMC/KUMC_Converted/${dataset}.yaml \
-		--hyp data/hyps/hyp.scratch-high.yaml \
+		--hyp data/hyps/${hyp}.yaml \
 		--batch-size $(batch) --device $(device) --name kumc_yolov5s_
 batch=20
 task=val
