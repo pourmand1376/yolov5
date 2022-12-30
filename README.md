@@ -20,3 +20,6 @@ I've also made sampler publicly available for anyone to use via a [pull request]
 This is where I have implemented 3D convolutional idea. 
 
 [Link](https://github.com/pourmand1376/yolov5/tree/3d_aneurysm)
+
+
+All trained models are available [here](https://huggingface.co/pourmand1376/yolov5-aneurysm).
